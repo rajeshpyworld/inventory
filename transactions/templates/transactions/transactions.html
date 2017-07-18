@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Sales{% endblock %}
+
+{% block head %}
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+    <div class="page-header">
+        <div class="pull-right">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center"><b>Today</b></div>
+                <div class="panel-body ">Total Sales {{ today_sales_info.total_sale }}</div>
+                <div class="panel-body ">Sales Revenue {{ today_sales_info.sales_amount }}</div>
+            </div>
+        </div>
+        <h1>Sales</h1>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="users">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Product</th>
+                <th>Cost</th>
+                <th>Sales Person</th>
+                <th>Customer</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ transaction.product.display_name }}</td>
+                    <td>{{ transaction.product.cost }}</td>
+                    <td>{{ transaction.sales_person.username }}</td>
+                    <td>{{ transaction.customer.username }}</td>
+                    <td>{{ transaction.create_date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=transactions %}
+            </div>
+        </div>
+
+    </div>
+{% endblock main %}

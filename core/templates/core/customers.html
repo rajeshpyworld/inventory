@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Customers{% endblock %}
+
+{% block head %}
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+    <div class="page-header">
+        <a href="{% url 'customer_add' %}" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span> Add Customer
+        </a>
+        <h1>Customers</h1>
+    </div>
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="users">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>S.No</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Option</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ customer.first_name }}</td>
+                    <td>{{ customer.last_name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td><a href="{% url 'customer_update' customer.pk %}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                        &nbsp;
+                        <a href="{% url 'customer_delete' customer.pk %}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=customers %}
+            </div>
+        </div>
+
+    </div>
+{% endblock main %}
