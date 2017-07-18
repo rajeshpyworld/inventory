@@ -16,4 +16,4 @@ class TransactionForm(forms.ModelForm):
 
     class Meta:
         model = Transaction
-        fields = ['product','sales_person', 'customer']
+        fields = ['product', 'sales_person', 'customer']

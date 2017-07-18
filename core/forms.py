@@ -91,10 +91,3 @@ class CustomerForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email']
-
-    def __init__(self, *args, **kwargs):
-        super(CustomerForm, self).__init__(*args, **kwargs)
-        self.fields['username'].validators.append(InvalidUsernameValidator)
-        self.fields['username'].validators.append(
-            UniqueUsernameIgnoreCaseValidator)
-        self.fields['email'].validators.append(UniqueEmailValidator)

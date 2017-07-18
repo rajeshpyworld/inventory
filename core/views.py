@@ -70,6 +70,7 @@ def customer_add(request):
             user = form.save(commit=False)
             user.user_type = 'C'
             user.save()
+            messages.success(request, "Successfully Added")
             return redirect('/')
 
     else:
@@ -94,6 +95,7 @@ def customer_update(request, pk=None):
         else:
             user = form.save(commit=False)
             user.save()
+            messages.success(request, "Successfully Updated")
             return redirect('/')
 
     else:
